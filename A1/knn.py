@@ -1,7 +1,8 @@
 """
 Implements a K-Nearest Neighbor classifier in PyTorch.
 """
-import torch
+import numpy as np
+import tensorflow as tf
 from typing import Dict, List
 
 
@@ -13,7 +14,7 @@ def hello():
     print("Hello from knn.py!")
 
 
-def compute_distances_two_loops(x_train: torch.Tensor, x_test: torch.Tensor):
+def compute_distances_two_loops(x_train: tf.Tensor, x_test: tf.Tensor):
     """
     Computes the squared Euclidean distance between each element of training
     set and each element of test set. Images should be flattened and treated
@@ -51,7 +52,7 @@ def compute_distances_two_loops(x_train: torch.Tensor, x_test: torch.Tensor):
     # same datatype and device as x_train
     num_train = x_train.shape[0]
     num_test = x_test.shape[0]
-    dists = x_train.new_zeros(num_train, num_test)
+    dists = np.zeros((num_train, num_test))
     ##########################################################################
     # TODO: Implement this function using a pair of nested loops over the    #
     # training data and the test data.                                       #

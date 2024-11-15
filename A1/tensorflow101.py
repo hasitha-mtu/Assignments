@@ -1,8 +1,7 @@
-import torch
+import tensorflow as tf
 
 # Type hints.
 from typing import List, Tuple
-from torch import Tensor
 
 
 def hello():
@@ -10,10 +9,10 @@ def hello():
     This is a sample function that we will try to import and run to ensure that
     our environment is correctly set up on Google Colab.
     """
-    print('Hello from pytorch101.py!')
+    print('Hello from tensorflow101.py!')
 
 
-def create_sample_tensor() -> Tensor:
+def create_sample_tensor() -> tf.Tensor:
     """
     Return a torch Tensor of shape (3, 2) which is filled with zeros, except
     for element (0, 1) which is set to 10 and element (1, 0) which is set to
@@ -27,16 +26,14 @@ def create_sample_tensor() -> Tensor:
     #                     TODO: Implement this function                      #
     ##########################################################################
     # Replace "pass" statement with your code
-    pass
+    x = tf.constant([[1, 2],[3, 4], [5, 6]], dtype=tf.float16)
     ###########################################################################
     #                            END OF YOUR CODE                             #
     ###########################################################################
     return x
 
 
-def mutate_tensor(
-    x: Tensor, indices: List[Tuple[int, int]], values: List[float]
-) -> Tensor:
+def mutate_tensor(x: tf.Tensor, indices: List[Tuple[int, int]], values: List[float]) -> tf.Tensor:
     """
     Mutate the tensor x according to indices and values. Specifically, indices
     is a list [(i0, j0), (i1, j1), ... ] of integer indices, and values is a
@@ -61,15 +58,17 @@ def mutate_tensor(
     ##########################################################################
     #                     TODO: Implement this function                      #
     ##########################################################################
-    # Replace "pass" statement with your code
-    pass
+
+    for k, (i, j) in enumerate(indices):
+        x[i, j].assign(values[k])
+
     ##########################################################################
     #                            END OF YOUR CODE                            #
     ##########################################################################
     return x
 
 
-def count_tensor_elements(x: Tensor) -> int:
+def count_tensor_elements(x: tf.Tensor) -> int:
     """
     Count the number of scalar elements in a tensor x.
 
@@ -85,20 +84,21 @@ def count_tensor_elements(x: Tensor) -> int:
     Returns:
         num_elements: An integer giving the number of scalar elements in x
     """
-    num_elements = None
+    num_elements = 1
     ##########################################################################
     #                      TODO: Implement this function                     #
     #   You CANNOT use the built-in functions torch.numel(x) or x.numel().   #
     ##########################################################################
     # Replace "pass" statement with your code
-    pass
+    for i in x.shape:
+        num_elements *= i
     ##########################################################################
     #                            END OF YOUR CODE                            #
     ##########################################################################
     return num_elements
 
 
-def create_tensor_of_pi(M: int, N: int) -> Tensor:
+def create_tensor_of_pi(M: int, N: int) -> tf.Tensor:
     """
     Returns a Tensor of shape (M, N) filled entirely with the value 3.14
 
@@ -120,7 +120,7 @@ def create_tensor_of_pi(M: int, N: int) -> Tensor:
     return x
 
 
-def multiples_of_ten(start: int, stop: int) -> Tensor:
+def multiples_of_ten(start: int, stop: int) -> tf.Tensor:
     """
     Returns a Tensor of dtype torch.float64 that contains all of the multiples
     of ten (in order) between start and stop, inclusive. If there are no
@@ -146,7 +146,7 @@ def multiples_of_ten(start: int, stop: int) -> Tensor:
     return x
 
 
-def slice_indexing_practice(x: Tensor) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
+def slice_indexing_practice(x: tf.Tensor) -> Tuple[tf.Tensor,tf.Tensor,tf.Tensor, tf.Tensor]:
     """
     Given a two-dimensional tensor x, extract and return several subtensors to
     practice with slice indexing. Each tensor should be created using a single
@@ -191,7 +191,7 @@ def slice_indexing_practice(x: Tensor) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
     return out
 
 
-def slice_assignment_practice(x: Tensor) -> Tensor:
+def slice_assignment_practice(x: tf.Tensor) -> tf.Tensor:
     """
     Given a two-dimensional tensor of shape (M, N) with M >= 4, N >= 6, mutate
     its first 4 rows and 6 columns so they are equal to:
@@ -228,7 +228,7 @@ def slice_assignment_practice(x: Tensor) -> Tensor:
     return x
 
 
-def shuffle_cols(x: Tensor) -> Tensor:
+def shuffle_cols(x: tf.Tensor) -> tf.Tensor:
     """
     Re-order the columns of an input tensor as described below.
 
@@ -256,7 +256,7 @@ def shuffle_cols(x: Tensor) -> Tensor:
     return y
 
 
-def reverse_rows(x: Tensor) -> Tensor:
+def reverse_rows(x: tf.Tensor) -> tf.Tensor:
     """
     Reverse the rows of the input tensor.
 
@@ -286,7 +286,7 @@ def reverse_rows(x: Tensor) -> Tensor:
     return y
 
 
-def take_one_elem_per_col(x: Tensor) -> Tensor:
+def take_one_elem_per_col(x: tf.Tensor) -> tf.Tensor:
     """
     Construct a new tensor by picking out one element from each column of the
     input tensor as described below.
@@ -315,7 +315,7 @@ def take_one_elem_per_col(x: Tensor) -> Tensor:
     return y
 
 
-def make_one_hot(x: List[int]) -> Tensor:
+def make_one_hot(x: List[int]) -> tf.Tensor:
     """
     Construct a tensor of one-hot-vectors from a list of Python integers.
 
@@ -343,7 +343,7 @@ def make_one_hot(x: List[int]) -> Tensor:
     return y
 
 
-def sum_positive_entries(x: Tensor) -> Tensor:
+def sum_positive_entries(x: tf.Tensor) -> tf.Tensor:
     """
     Return the sum of all the positive values in the input tensor x.
 
@@ -380,7 +380,7 @@ def sum_positive_entries(x: Tensor) -> Tensor:
     return pos_sum
 
 
-def reshape_practice(x: Tensor) -> Tensor:
+def reshape_practice(x: tf.Tensor) -> tf.Tensor:
     """
     Given an input tensor of shape (24,), return a reshaped tensor y of shape
     (3, 8) such that
@@ -411,7 +411,7 @@ def reshape_practice(x: Tensor) -> Tensor:
     return y
 
 
-def zero_row_min(x: Tensor) -> Tensor:
+def zero_row_min(x: tf.Tensor) -> tf.Tensor:
     """
     Return a copy of the input tensor x, where the minimum value along each row
     has been set to 0.
@@ -450,9 +450,7 @@ def zero_row_min(x: Tensor) -> Tensor:
     return y
 
 
-def batched_matrix_multiply(
-    x: Tensor, y: Tensor, use_loop: bool = True
-) -> Tensor:
+def batched_matrix_multiply(x: tf.Tensor, y:tf. Tensor, use_loop: bool = True) -> tf.Tensor:
     """
     Perform batched matrix multiplication between the tensor x of shape
     (B, N, M) and the tensor y of shape (B, M, P).
@@ -477,7 +475,7 @@ def batched_matrix_multiply(
         return batched_matrix_multiply_noloop(x, y)
 
 
-def batched_matrix_multiply_loop(x: Tensor, y: Tensor) -> Tensor:
+def batched_matrix_multiply_loop(x: tf.Tensor, y: tf.Tensor) -> tf.Tensor:
     """
     Perform batched matrix multiplication between the tensor x of shape
     (B, N, M) and the tensor y of shape (B, M, P).
@@ -506,7 +504,7 @@ def batched_matrix_multiply_loop(x: Tensor, y: Tensor) -> Tensor:
     return z
 
 
-def batched_matrix_multiply_noloop(x: Tensor, y: Tensor) -> Tensor:
+def batched_matrix_multiply_noloop(x: tf.Tensor, y: tf.Tensor) -> tf.Tensor:
     """
     Perform batched matrix multiplication between the tensor x of shape
     (B, N, M) and the tensor y of shape (B, M, P).
@@ -537,7 +535,7 @@ def batched_matrix_multiply_noloop(x: Tensor, y: Tensor) -> Tensor:
     return z
 
 
-def normalize_columns(x: Tensor) -> Tensor:
+def normalize_columns(x: tf.Tensor) -> tf.Tensor:
     """
     Normalize the columns of the matrix x by subtracting the mean and dividing
     by standard deviation of each column. You should return a new tensor; the
@@ -572,7 +570,7 @@ def normalize_columns(x: Tensor) -> Tensor:
     return y
 
 
-def mm_on_cpu(x: Tensor, w: Tensor) -> Tensor:
+def mm_on_cpu(x: tf.Tensor, w: tf.Tensor) -> tf.Tensor:
     """
     Perform matrix multiplication on CPU.
 
@@ -589,7 +587,7 @@ def mm_on_cpu(x: Tensor, w: Tensor) -> Tensor:
     return y
 
 
-def mm_on_gpu(x: Tensor, w: Tensor) -> Tensor:
+def mm_on_gpu(x: tf.Tensor, w: tf.Tensor) -> tf.Tensor:
     """
     Perform matrix multiplication on GPU.
 
@@ -619,7 +617,7 @@ def mm_on_gpu(x: Tensor, w: Tensor) -> Tensor:
     return y
 
 
-def challenge_mean_tensors(xs: List[Tensor], ls: Tensor) -> Tensor:
+def challenge_mean_tensors(xs: List[tf.Tensor], ls: tf.Tensor) -> tf.Tensor:
     """
     Compute mean of each tensor in a given list of tensors.
 
@@ -653,7 +651,7 @@ def challenge_mean_tensors(xs: List[Tensor], ls: Tensor) -> Tensor:
     return y
 
 
-def challenge_get_uniques(x: torch.Tensor) -> Tuple[Tensor, Tensor]:
+def challenge_get_uniques(x: tf.Tensor) -> Tuple[tf.Tensor, tf.Tensor]:
     """
     Get unique values and first occurrence from an input tensor.
 
@@ -691,3 +689,12 @@ def challenge_get_uniques(x: torch.Tensor) -> Tuple[Tensor, Tensor]:
     #                            END OF YOUR CODE                            #
     ##########################################################################
     return uniques, indices
+
+if __name__ == "__main__":
+    hello()
+    print(create_sample_tensor())
+    input_tensor = tf.Variable(tf.random.uniform(shape=(5, 4)))
+    indices = [(2, 1), (1, 3), (4, 3), (3, 0), (0, 0)]
+    values = [1.1111, 2.2222, 3.3333, 4.44444, 5.55555]
+    print(mutate_tensor(input_tensor, indices, values))
+    print(count_tensor_elements(input_tensor))
