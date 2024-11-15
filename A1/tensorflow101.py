@@ -113,7 +113,7 @@ def create_tensor_of_pi(M: int, N: int) -> tf.Tensor:
     #         TODO: Implement this function. It should take one line.        #
     ##########################################################################
     # Replace "pass" statement with your code
-    pass
+    x = tf.fill((M, N), 3.14)
     ##########################################################################
     #                            END OF YOUR CODE                            #
     ##########################################################################
@@ -698,3 +698,4 @@ if __name__ == "__main__":
     values = [1.1111, 2.2222, 3.3333, 4.44444, 5.55555]
     print(mutate_tensor(input_tensor, indices, values))
     print(count_tensor_elements(input_tensor))
+    print(create_tensor_of_pi(4, 6))
